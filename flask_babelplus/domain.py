@@ -140,6 +140,20 @@ class Domain(object):
         """
         return LazyString(self.gettext, string, **variables)
 
+    def lazy_ngettext(self, singular, plural, num, **variables):
+        """Like :func:`ngettext` but the string returned is lazy which means
+        it will be translated when it is used as an actual string.
+
+        Example::
+
+            apples = lazy_ngettext(u'%(num)d Apple', u'%(num)d Apples', num=len(apples))
+
+            @app.route('/')
+            def index():
+                return unicode(apples)
+        """
+        return LazyString(self.ngettext, singular, plural, num, **variables)
+
     def lazy_pgettext(self, context, string, **variables):
         """Like :func:`pgettext` but the string returned is lazy which means
         it will be translated when it is used as an actual string.
@@ -190,6 +204,10 @@ def npgettext(*args, **kwargs):
 
 def lazy_gettext(*args, **kwargs):
     return LazyString(gettext, *args, **kwargs)
+
+
+def lazy_ngettext(*args, **kwargs):
+    return LazyString(ngettext, *args, **kwargs)
 
 
 def lazy_pgettext(*args, **kwargs):

@@ -11,7 +11,7 @@ import flask
 
 import flask_babelplus as babel_ext
 from flask_babelplus import gettext, ngettext, pgettext, npgettext, \
-    lazy_gettext, lazy_pgettext
+    lazy_gettext, lazy_ngettext, lazy_pgettext
 from flask_babelplus._compat import text_type
 from flask_babelplus.utils import get_state, _get_format
 
@@ -228,6 +228,16 @@ class GettextTestCase(unittest.TestCase):
         with app.test_request_context():
             assert text_type(first) == 'first'
             assert text_type(domain_first) == 'first'
+
+    def test_lazy_ngettext(self):
+        app = flask.Flask(__name__)
+        babel_ext.Babel(app, default_locale='de_DE')
+        one_apple = lazy_ngettext(u'%(num)s Apple', u'%(num)s Apples', 1)
+        with app.test_request_context():
+            assert text_type(one_apple) == '1 Apfel'
+        two_apples = lazy_ngettext(u'%(num)s Apple', u'%(num)s Apples', 2)
+        with app.test_request_context():
+            assert text_type(two_apples) == u'2 Äpfel'
 
     def test_lazy_pgettext(self):
         app = flask.Flask(__name__)

@@ -12,7 +12,8 @@ from __future__ import absolute_import
 
 from .core import Babel
 from .domain import Domain, get_domain, \
-    gettext, ngettext, pgettext, npgettext, lazy_gettext, lazy_pgettext
+    gettext, ngettext, pgettext, npgettext, lazy_gettext, lazy_ngettext, \
+    lazy_pgettext
 from .utils import get_locale, get_timezone, refresh, \
     force_locale, to_utc, to_user_timezone, format_datetime, format_date, \
     format_time, format_timedelta, format_number, format_decimal, \
